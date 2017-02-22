@@ -39,6 +39,8 @@ cp ./templates/pool.conf /etc/php/7.0/fpm/pool.d/$1.conf
 # replacing dummy value with the real domain name
 sed -i s/__SITE_NAME__/$2/g /etc/nginx/sites-available/$2
 sed -i s/__USER_NAME__/$1/g /etc/nginx/sites-available/$2
+ln -s /etc/nginx/sites-available/$2 /etc/nginx/sites-enabled/$2
+
 
 # replacing dummy value with real user name
 sed -i s/__SITE_NAME__/$1/g /etc/php/7.0/fpm/pool.d/$1.conf

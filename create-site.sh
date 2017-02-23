@@ -20,11 +20,35 @@
 # https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04
 
 
-#!/bin/bash
+
+show_help()
+{
+    echo "
+Quick Usage:
+    You just need to specify the user name that will run the site and
+    the fully qualified domain name (i.e. without the http part; subdomains also works)
+
+    e.g. ./create-site.sh site_user my.site.com
+
+Advanced usage:
+    -d, --domain        FQ domain
+    -u, --user          site_user
+    --wp_password       wordpress-password
+    --wp_mail           wordpress-admin-mail
+    --wp_admin          wordpress-admin-user
+
+-h, --help              Print this help"
+    exit 1
+}
+
 
 for i in "$@"
 do
 case $i in
+    -h | --help )
+    show_help
+    exit 1
+    ;;
     -d=*|--domain=*)
     DOMAIN="${i#*=}"
     shift

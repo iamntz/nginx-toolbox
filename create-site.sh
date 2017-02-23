@@ -52,7 +52,6 @@ case $i in
 esac
 done
 
-
 service nginx stop
 
 # creating default folder structure
@@ -63,32 +62,32 @@ touch /var/www/${DOMAIN}/logs/error.log
 touch /var/www/${DOMAIN}/htdocs/index.php
 
 # adding group for new site
-groupadd ${USER}
+groupadd $USER
 # adding user for the new site
-useradd -g ${USER} ${USER} -d /var/www/${DOMAIN} -G sshusers
+useradd -g $USER $USER -d /var/www/$DOMAIN -G sshusers
 # maybe add to www-data as well?
-#useradd -g ${USER} ${USER} -d /var/www/${DOMAIN} -G www-data
+#useradd -g $USER $USER -d /var/www/$DOMAIN -G www-data
 
 # changing permissions for the new site
-chown -R ${USER}:${USER} /var/www/${DOMAIN}
+chown -R $USER:$USER /var/www/$DOMAIN
 
 # copying  nginx config
-cp ./templates/nginx.conf /etc/nginx/sites-available/${DOMAIN}
+cp templates/nginx.conf /etc/nginx/sites-available/$DOMAIN
 
 #copying pool config to limit access to an user
-cp ./templates/pool.conf /etc/php/7.0/fpm/pool.d/${USER}.conf
+cp templates/pool.conf /etc/php/7.0/fpm/pool.d/$USER.conf
 
 # replacing dummy value with the real domain name
-sed -i s/__SITE_NAME__/${DOMAIN}/g /etc/nginx/sites-available/${DOMAIN}
-sed -i s/__USER_NAME__/${USER}/g /etc/nginx/sites-available/${DOMAIN}
-ln -s /etc/nginx/sites-available/${DOMAIN} /etc/nginx/sites-enabled/${DOMAIN}
+sed -i s/__SITE_NAME__/$DOMAIN/g /etc/nginx/sites-available/$DOMAIN
+sed -i s/__USER_NAME__/$USER/g /etc/nginx/sites-available/$DOMAIN
+ln -s /etc/nginx/sites-available/$DOMAIN /etc/nginx/sites-enabled/$DOMAIN
 
 
 # replacing dummy value with real user name
-sed -i s/__SITE_NAME__/${USER}/g /etc/php/7.0/fpm/pool.d/${USER}.conf
+sed -i s/__SITE_NAME__/$USER/g /etc/php/7.0/fpm/pool.d/$USER.conf
 
 # generating let's encrypt certificate
-letsencrypt certonly --standalone -d ${DOMAIN}
+letsencrypt certonly --standalone -d $DOMAIN
 
 # restarting PHP & nginx
 service php7.0-fpm restart
@@ -116,24 +115,28 @@ else
     mysql -uroot -p${rootpasswd} -e "FLUSH PRIVILEGES;"
 fi
 
+read -p "Install WP (Y/n)? " -n 1 -r
+echo ""
 
-sudo -u ${USER} -i -- wp core download --path=htdocs
-sudo -u ${USER} -i -- wp core config --path=htdocs --dbname=${USER} --dbuser=${USER} --dbpass=${PASSWDDB}
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    sudo -u $USER -i -- wp core download --path=htdocs
+    sudo -u $USER -i -- wp core config --path=htdocs --dbname=$USER --dbuser=$USER --dbpass=${PASSWDDB}
 
-if [[ -z $WP_PASSWORD ]]; then
-    $WP_PASSWORD = "$(openssl rand -base64 6)"
+    if [[ -z $WP_PASSWORD ]]; then
+        WP_PASSWORD="$(openssl rand -base64 6)"
+    fi
+
+    if [[ -z $WP_MAIL ]]; then
+        WP_MAIL=admin@$DOMAIN
+    fi
+
+    if [[ -z $WP_ADMIN ]]; then
+        WP_ADMIN=admin
+    fi
+
+    sudo -u $USER -i -- wp core install --path=htdocs --url=https://$DOMAIN --title="${DOMAIN}" --admin_user=${WP_ADMIN} --admin_password=${WP_PASSWORD} --admin_email=${WP_MAIL}
+    sudo -H -u $USER bash -c 'mkdir ~/.ssh && ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -q -N "" -C "dev@dev" && cat ~/.ssh/id_rsa.pub > ~/.ssh/authorized_keys'
 fi
-
-if [[ -z $WP_MAIL ]]; then
-    $WP_MAIL = admin@${DOMAIN}
-fi
-
-if [[ -z $WP_ADMIN ]]; then
-    $WP_ADMIN = admin
-fi
-
-sudo -u ${USER} -i -- wp core install --path=htdocs --url=https://${DOMAIN} --title="${DOMAIN}" --admin_user=${WP_ADMIN} --admin_password=${WP_PASSWORD} --admin_email=${WP_MAIL}
-sudo -H -u ${USER} bash -c 'mkdir ~/.ssh && ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -q -N "" -C "dev@dev" && cat ~/.ssh/id_rsa.pub > ~/.ssh/authorized_keys'
 
 echo "Domain: ${DOMAIN}"
 echo "Mysql user: ${USER}"

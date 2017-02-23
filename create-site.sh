@@ -10,6 +10,11 @@
 # rm -rf /etc/letsencrypt/live/site_name
 # userdel user
 # groupdel user
+#
+#
+# apt install sendmail imagemagick nginx php-fpm php-mysql
+# https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04
+#
 
 service nginx stop
 

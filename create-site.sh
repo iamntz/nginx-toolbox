@@ -12,7 +12,7 @@
 # groupdel user
 #
 #
-# apt install sendmail imagemagick nginx php-fpm php-mysql php-dom letsencrypt
+# apt install sendmail imagemagick nginx php-fpm php-mysql php-dom letsencrypt composer phpunit
 #
 # echo "AllowGroups sshusers" >> /etc/ssh/sshd_config
 # addgroup sshusers && adduser root sshusers

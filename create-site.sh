@@ -160,6 +160,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         WP_ADMIN=admin
     fi
 
+    echo "Installing WordPress. This may take a while."
     sudo -u $USER -i -- wp core install --path=htdocs --url=https://$DOMAIN --title="${DOMAIN}" --admin_user=${WP_ADMIN} --admin_password=${WP_PASSWORD} --admin_email=${WP_MAIL}
     sudo -H -u $USER bash -c 'mkdir ~/.ssh && ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -q -N "" -C "dev@dev" && cat ~/.ssh/id_rsa.pub > ~/.ssh/authorized_keys'
 fi

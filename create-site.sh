@@ -22,6 +22,16 @@
 # https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04#configure-the-php-processor
 
 
+# add
+# client_max_body_size 100m;
+# on /etc/nginx/nginx.conf  (http block)
+# 
+# 
+# add
+# upload_max_filesize = 100M
+# post_max_size = 100M
+# on /etc/php/7.0/fpm/php.ini
+
 
 show_help()
 {
@@ -98,10 +108,12 @@ useradd -g $USER $USER -d /var/www/$DOMAIN -G sshusers
 chown -R $USER:$USER /var/www/$DOMAIN
 
 # copying  nginx config
-cp templates/nginx.conf /etc/nginx/sites-available/$DOMAIN
+cp -i  templates/nginx.conf /etc/nginx/sites-available/$DOMAIN
 
 #copying pool config to limit access to an user
-cp templates/pool.conf /etc/php/7.0/fpm/pool.d/$USER.conf
+cp -i templates/pool.conf /etc/php/7.0/fpm/pool.d/$USER.conf
+
+cp -i templates/robots.txt /var/www/${DOMAIN}/htdocs/robots.txt
 
 # replacing dummy value with the real domain name
 sed -i s/__SITE_NAME__/$DOMAIN/g /etc/nginx/sites-available/$DOMAIN
@@ -162,8 +174,12 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 
     echo "Installing WordPress. This may take a while."
     sudo -u $USER -i -- wp core install --path=htdocs --url=https://$DOMAIN --title="${DOMAIN}" --admin_user=${WP_ADMIN} --admin_password=${WP_PASSWORD} --admin_email=${WP_MAIL}
-    sudo -H -u $USER bash -c 'mkdir ~/.ssh && ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -q -N "" -C "dev@dev" && cat ~/.ssh/id_rsa.pub > ~/.ssh/authorized_keys'
 fi
+
+
+sudo -H -u $USER bash -c 'mkdir ~/.ssh && ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -q -N "" -C "dev@dev" && cat ~/.ssh/id_rsa.pub > ~/.ssh/authorized_keys'
+
+cat ~/.ssh/authorized_keys  >> "/var/www/${DOMAIN}/.ssh/authorized_keys"
 
 echo "Domain: ${DOMAIN}"
 echo "Mysql user: ${USER}"

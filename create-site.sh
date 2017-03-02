@@ -12,13 +12,13 @@
 # groupdel user
 #
 #
-# apt install sendmail imagemagick nginx php-fpm php-mysql php-dom letsencrypt composer phpunit mariadb-server-10.0 mariadb-client-core-10.0
+# sudo apt-get install sendmail imagemagick nginx php-fpm php-mysql php-dom letsencrypt composer phpunit mariadb-server-10.0 mariadb-client-core-10.0 php-curl php-gd
 #
-# echo "AllowGroups sshusers" >> /etc/ssh/sshd_config
-# addgroup sshusers && adduser root sshusers
+# sudo echo "AllowGroups sshusers" >> /etc/ssh/sshd_config
+# sudo addgroup sshusers && adduser root sshusers
 # curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
 
-# echo "cgi.fix_pathinfo=0" >> /etc/php/7.0/fpm/php.ini
+# sudo echo "cgi.fix_pathinfo=0" >> /etc/php/7.0/fpm/php.ini
 # https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04#configure-the-php-processor
 
 

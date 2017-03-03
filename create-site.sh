@@ -145,8 +145,8 @@ if [ -f /root/.my.cnf ]; then
     mysql -e "FLUSH PRIVILEGES;"
 # If /root/.my.cnf doesn't exist then it'll ask for root password
 else
-    echo "Please enter root user MySQL password!"
-    read rootpasswd
+    echo -n "Please enter root user MySQL password!"
+    read -s rootpasswd
     mysql -uroot -p${rootpasswd} -e "CREATE DATABASE ${USER} /*\!40100 DEFAULT CHARACTER SET utf8 */;"
     mysql -uroot -p${rootpasswd} -e "CREATE USER ${USER}@localhost IDENTIFIED BY '${PASSWDDB}';"
     mysql -uroot -p${rootpasswd} -e "GRANT ALL PRIVILEGES ON ${USER}.* TO '${USER}'@'localhost';"
@@ -176,8 +176,9 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     sudo -u $USER -i -- wp core install --path=htdocs --url=https://$DOMAIN --title="${DOMAIN}" --admin_user=${WP_ADMIN} --admin_password=${WP_PASSWORD} --admin_email=${WP_MAIL}
 fi
 
-
-sudo -H -u $USER bash -c 'mkdir ~/.ssh && ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -q -N "" -C "dev@dev" && cat ~/.ssh/id_rsa.pub > ~/.ssh/authorized_keys'
+if [ ! -f "/var/www/${DOMAIN}/.ssh/id_rsa" ]; then
+    sudo -H -u $USER bash -c 'mkdir ~/.ssh && ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -q -N "" -C "dev@dev" && cat ~/.ssh/id_rsa.pub > ~/.ssh/authorized_keys'
+fi
 
 cat ~/.ssh/authorized_keys  >> "/var/www/${DOMAIN}/.ssh/authorized_keys"
 

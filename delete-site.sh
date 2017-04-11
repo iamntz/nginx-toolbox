@@ -1,6 +1,7 @@
 #!/bin/bash
 
 service nginx stop
+service php7.0-fpm stop
 
 rm -rf /var/www/$2
 
@@ -14,3 +15,6 @@ rm -rf /etc/letsencrypt/live/$1
 read mysqlRootPassword
 mysql -uroot -p${mysqlRootPassword} -e "DROP USER $1;"
 mysqladmin -uroot -p${mysqlRootPassword} drop $1
+
+service nginx start
+service php7.0-fpm start

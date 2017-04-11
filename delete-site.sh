@@ -18,8 +18,8 @@ rm /etc/nginx/sites-enabled/$DOMAIN
 rm -rf /etc/letsencrypt/live/$DOMAIN
 
 read mysqlRootPassword
-mysql -uroot -p${mysqlRootPassword} -e "DROP USER ${USER};"
-mysqladmin -uroot -p${mysqlRootPassword} drop $USER
+mysql -uroot -p${mysqlRootPassword} -e "DROP USER ${USER}@localhost;"
+#mysqladmin -uroot -p${mysqlRootPassword} drop $USER
 
 service nginx start
 service php7.0-fpm start

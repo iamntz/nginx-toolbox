@@ -16,9 +16,11 @@ rm /etc/nginx/sites-available/$DOMAIN
 rm /etc/nginx/sites-enabled/$DOMAIN
 
 rm -rf /etc/letsencrypt/live/$DOMAIN
+rm -rf /etc/letsencrypt/archive/$DOMAIN
+rm /etc/letsencrypt/renewal/${DOMAIN}.conf
 
-read mysqlRootPassword
-mysql -uroot -p${mysqlRootPassword} -e "DROP USER ${USER}@localhost;"
+#read mysqlRootPassword
+#mysql -uroot -p${mysqlRootPassword} -e "DROP USER ${USER}@localhost;"
 #mysqladmin -uroot -p${mysqlRootPassword} drop $USER
 
 service nginx start

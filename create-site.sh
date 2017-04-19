@@ -60,8 +60,6 @@ cp -i  templates/nginx.conf /etc/nginx/sites-available/$DOMAIN
 #copying pool config to limit access to an user
 cp -i templates/pool.conf /etc/php/7.0/fpm/pool.d/$USER.conf
 
-# cp -i templates/robots.txt /var/www/${DOMAIN}/htdocs/robots.txt
-
 # replacing dummy value with the real domain name
 sed -i s/__SITE_NAME__/$DOMAIN/g /etc/nginx/sites-available/$DOMAIN
 sed -i s/__USER_NAME__/$USER/g /etc/nginx/sites-available/$DOMAIN
@@ -78,7 +76,6 @@ letsencrypt certonly --standalone -d $DOMAIN
 service php7.0-fpm restart
 service nginx start
 
-# If Install WP else just create subdomain
 read -p "Install WP (Y/n)? " -n 1 -r
 echo ""
 

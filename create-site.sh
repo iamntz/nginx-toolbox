@@ -129,7 +129,7 @@ sed -i s/__SITE_NAME__/$USER/g /etc/php/7.3/fpm/pool.d/$USER.conf
 letsencrypt certonly --standalone -d $DOMAIN
 
 # restarting PHP & nginx
-service php7.0-fpm restart
+service php7.3-fpm restart
 service nginx start
 
 # create random password

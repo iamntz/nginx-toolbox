@@ -11,9 +11,9 @@
 # userdel user
 # groupdel user
 #
-#
-# apt install sendmail imagemagick nginx php-fpm php-mysql php-dom letsencrypt composer phpunit 
-# apt-get install php7.4-mbstring mariadb-server-10.0 mariadb-client-core-10.0
+# sudo add-apt-repository ppa:ondrej/php
+# apt install certobt sendmail imagemagick nginx php-fpm php-mysql php-dom composer phpunit mariadb-server
+# sudo apt-get install php7.4 php7.4-{bcmath,bz2,intl,gd,mbstring,mysql,zip,dom}
 #
 # echo "AllowGroups sshusers" >> /etc/ssh/sshd_config
 # addgroup sshusers && adduser root sshusers

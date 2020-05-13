@@ -6,20 +6,20 @@
 # to delete:
 # rm -rf /var/www/site_name/
 # rm /etc/nginx/sites-available/site_name
-# rm /etc/php/7.3/fpm/pool.d/user.conf
+# rm /etc/php/7.4/fpm/pool.d/user.conf
 # rm -rf /etc/letsencrypt/live/site_name
 # userdel user
 # groupdel user
 #
 #
 # apt install sendmail imagemagick nginx php-fpm php-mysql php-dom letsencrypt composer phpunit 
-# apt-get install php7.3-mbstring mariadb-server-10.0 mariadb-client-core-10.0
+# apt-get install php7.4-mbstring mariadb-server-10.0 mariadb-client-core-10.0
 #
 # echo "AllowGroups sshusers" >> /etc/ssh/sshd_config
 # addgroup sshusers && adduser root sshusers
 # curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
 
-# echo "cgi.fix_pathinfo=0" >> /etc/php/7.3/fpm/php.ini
+# echo "cgi.fix_pathinfo=0" >> /etc/php/7.4/fpm/php.ini
 # https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04#configure-the-php-processor
 
 
@@ -31,7 +31,7 @@
 # add
 # upload_max_filesize = 100M
 # post_max_size = 100M
-# on /etc/php/7.3/fpm/php.ini
+# on /etc/php/7.4/fpm/php.ini
 
 
 show_help()
@@ -112,7 +112,7 @@ chown -R $USER:$USER /var/www/$DOMAIN
 cp -i  templates/nginx.conf /etc/nginx/sites-available/$DOMAIN
 
 #copying pool config to limit access to an user
-cp -i templates/pool.conf /etc/php/7.3/fpm/pool.d/$USER.conf
+cp -i templates/pool.conf /etc/php/7.4/fpm/pool.d/$USER.conf
 
 cp -i templates/robots.txt /var/www/${DOMAIN}/htdocs/robots.txt
 
@@ -123,13 +123,13 @@ ln -s /etc/nginx/sites-available/$DOMAIN /etc/nginx/sites-enabled/$DOMAIN
 
 
 # replacing dummy value with real user name
-sed -i s/__SITE_NAME__/$USER/g /etc/php/7.3/fpm/pool.d/$USER.conf
+sed -i s/__SITE_NAME__/$USER/g /etc/php/7.4/fpm/pool.d/$USER.conf
 
 # generating let's encrypt certificate
 letsencrypt certonly --standalone -d $DOMAIN
 
 # restarting PHP & nginx
-service php7.3-fpm restart
+service php7.4-fpm restart
 service nginx start
 
 # create random password

@@ -11,10 +11,12 @@
 # userdel user
 # groupdel user
 #
-# sudo add-apt-repository ppa:ondrej/php
-# sudo add-apt-repository ppa:certbot/certbot
+# add-apt-repository ppa:ondrej/php
+# add-apt-repository ppa:certbot/certbot
 # apt install certbot sendmail imagemagick nginx composer phpunit mariadb-server
-# sudo apt-get install php7.4-fpm php7.4-{bcmath,bz2,intl,gd,mbstring,mysql,zip,dom}
+# apt install php7.4-fpm php7.4-{bcmath,bz2,intl,gd,mbstring,mysql,zip,dom}
+# apt install python3-pip
+# apt install python3-certbot-dns-digitalocean
 #
 # echo "AllowGroups sshusers" >> /etc/ssh/sshd_config
 # addgroup sshusers && adduser root sshusers

@@ -104,7 +104,8 @@ touch /var/www/${DOMAIN}/htdocs/index.php
 # adding group for new site
 groupadd $USER
 # adding user for the new site
-useradd -g $USER $USER -d /var/www/$DOMAIN -G sshusers
+useradd -g $USER $USER -d /var/www/$DOMAIN -G sshusers -s /bin/bash
+
 # maybe add to www-data as well?
 #useradd -g $USER $USER -d /var/www/$DOMAIN -G www-data
 

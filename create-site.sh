@@ -119,6 +119,8 @@ cp -i templates/pool.conf /etc/php/7.4/fpm/pool.d/$USER.conf
 
 cp -i templates/robots.txt /var/www/${DOMAIN}/htdocs/robots.txt
 
+cp -i templates/.my.cnf /var/www/${DOMAIN}/.my.cnf
+
 # replacing dummy value with the real domain name
 sed -i s/__SITE_NAME__/$DOMAIN/g /etc/nginx/sites-available/$DOMAIN
 sed -i s/__USER_NAME__/$USER/g /etc/nginx/sites-available/$DOMAIN
@@ -129,7 +131,7 @@ ln -s /etc/nginx/sites-available/$DOMAIN /etc/nginx/sites-enabled/$DOMAIN
 sed -i s/__SITE_NAME__/$USER/g /etc/php/7.4/fpm/pool.d/$USER.conf
 
 # generating let's encrypt certificate
-letsencrypt certonly --standalone -d $DOMAIN
+# letsencrypt certonly --standalone -d $DOMAIN
 
 # restarting PHP & nginx
 service php7.4-fpm restart
@@ -185,6 +187,11 @@ if [ ! -f "/var/www/${DOMAIN}/.ssh/id_rsa" ]; then
 fi
 
 cat ~/.ssh/authorized_keys  >> "/var/www/${DOMAIN}/.ssh/authorized_keys"
+
+cp -i templates/.my.cnf /var/www/${DOMAIN}/.my.cnf
+sed -i s/__DB_USER__/$USER/g /var/www/${DOMAIN}/.my.cnf
+sed -i s/__DB_PASSWORD__/$PASSWDDB/g /var/www/${DOMAIN}/.my.cnf
+
 
 echo "Domain: ${DOMAIN}"
 echo "Mysql user: ${USER}"

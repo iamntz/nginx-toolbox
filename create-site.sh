@@ -14,7 +14,7 @@
 # add-apt-repository ppa:ondrej/php
 # add-apt-repository ppa:certbot/certbot
 # apt install certbot sendmail imagemagick nginx composer phpunit mariadb-server
-# apt install php7.4-fpm php7.4-{bcmath,bz2,intl,gd,mbstring,mysql,zip,dom}
+# apt install php7.4-fpm php7.4-{bcmath,bz2,intl,gd,mbstring,mysql,zip,dom,curl}
 # apt install python3-pip
 # apt install python3-certbot-dns-digitalocean
 #

@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # usage:
+# Create cert:
+# certbot certonly --dns-digitalocean --dns-digitalocean-credentials ~/.secrets/certbot/digitalocean.ini -d site.com -d www.site.com
 # ./create-site.sh user site
 
 # to delete:
@@ -15,8 +17,12 @@
 # add-apt-repository ppa:certbot/certbot
 # apt install certbot sendmail imagemagick nginx composer phpunit mariadb-server
 # apt install php7.4-fpm php7.4-{bcmath,bz2,intl,gd,mbstring,mysql,zip,dom,curl}
-# apt install python3-pip
-# apt install python3-certbot-dns-digitalocean
+#
+# sudo snap install core; sudo snap refresh core
+# sudo apt-get remove certbot
+# sudo snap install --classic certbot
+# sudo snap install certbot-dns-digitalocean
+# sudo ln -s /snap/bin/certbot /usr/bin/certbot
 #
 # echo "AllowGroups sshusers" >> /etc/ssh/sshd_config
 # addgroup sshusers && adduser root sshusers
@@ -36,6 +42,11 @@
 # post_max_size = 100M
 # on /etc/php/7.4/fpm/php.ini
 
+# on ~/.secrets/certbot/digitalocean.ini
+# dns_digitalocean_token = INSERT_TOKEN_HERE
+# you find your token in DO sidebar -> API -> Personal Access Tokens
+
+# sudo update-alternatives --set php /usr/bin/php7.4
 
 show_help()
 {

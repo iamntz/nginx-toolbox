@@ -2,7 +2,7 @@
 
 # usage:
 # Create cert:
-# certbot certonly --dns-digitalocean --dns-digitalocean-credentials ~/.secrets/certbot/digitalocean.ini -d site.com -d www.site.com
+# certbot certonly --dns-digitalocean --dns-digitalocean-credentials ~/.secrets/certbot/digitalocean.ini -d site.com -d *.site.com
 # ./create-site.sh user site
 
 # to delete:

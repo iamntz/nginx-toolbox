@@ -1,29 +1,38 @@
 #!/bin/bash
 
-# usage:
+##########
+# usage: #
+##########
 # Create cert:
 # certbot certonly --dns-digitalocean --dns-digitalocean-credentials ~/.secrets/certbot/digitalocean.ini -d site.com -d *.site.com
-# ./create-site.sh user site
+# ./create-site.sh site_user site_url
 
-# to delete:
+##############
+# to delete: #
+##############
 # rm -rf /var/www/site_name/
 # rm /etc/nginx/sites-available/site_name
 # rm /etc/php/7.4/fpm/pool.d/user.conf
 # rm -rf /etc/letsencrypt/live/site_name
-# userdel user
-# groupdel user
-#
+# userdel site_user
+# groupdel site_user
+
+####################
+# First time Setup #
+####################
+
 # add-apt-repository ppa:ondrej/php
 # add-apt-repository ppa:certbot/certbot
-# apt install certbot sendmail imagemagick nginx composer phpunit mariadb-server
-# apt install php7.4-fpm php7.4-{bcmath,bz2,intl,gd,mbstring,mysql,zip,dom,curl}
+# apt install sendmail imagemagick nginx composer phpunit mariadb-server redis-server
+# apt install php7.4-fpm php7.4-{bcmath,bz2,intl,gd,mbstring,mysql,zip,dom,curl,redis}
 #
-# sudo snap install core; sudo snap refresh core
+# sudo snap install core
+# sudo snap refresh core
 # sudo apt-get remove certbot
 # sudo snap install --classic certbot
 # sudo snap install certbot-dns-digitalocean
 # sudo ln -s /snap/bin/certbot /usr/bin/certbot
-#
+
 # echo "AllowGroups sshusers" >> /etc/ssh/sshd_config
 # addgroup sshusers && adduser root sshusers
 # curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
@@ -31,12 +40,14 @@
 # echo "cgi.fix_pathinfo=0" >> /etc/php/7.4/fpm/php.ini
 # https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04#configure-the-php-processor
 
+# Change `supervised systemd` on /etc/redis/redis.conf
+# https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04
 
 # add
 # client_max_body_size 100m;
 # on /etc/nginx/nginx.conf  (http block)
-# 
-# 
+
+
 # add
 # upload_max_filesize = 100M
 # post_max_size = 100M

@@ -41,6 +41,7 @@
 # https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04#configure-the-php-processor
 
 # Change `supervised systemd` on /etc/redis/redis.conf
+# systemctl restart redis.service
 # https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04
 
 # add

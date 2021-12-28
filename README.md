@@ -1,6 +1,5 @@
 # Usage
 
-
 ```
 certbot certonly --dns-digitalocean --dns-digitalocean-credentials ~/.secrets/certbot/digitalocean.ini -d site.com -d *.site.com
 ./create-site.sh site_user site_url
